@@ -51,12 +51,17 @@ var (
 )
 
 func init() {
-	dir := os.Getenv("PHONE_DATA_DIR")
+	//dir := os.Getenv("PHONE_DATA_DIR")
+	var err error
+	dir, err := os.Getwd()
+	if err != nil {
+		dir = os.Getenv("PHONE_DATA_DIR")
+	}
 	if dir == "" {
 		_, fulleFilename, _, _ := runtime.Caller(0)
 		dir = path.Dir(fulleFilename)
 	}
-	var err error
+
 	content, err = ioutil.ReadFile(path.Join(dir, PHONE_DAT))
 	if err != nil {
 		panic(err)
